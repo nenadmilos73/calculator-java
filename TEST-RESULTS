@@ -1,0 +1,129 @@
+REZULTATI TESTIRANJA KALKULATORA
+
+Vrsta testiranja: Sistemsko / test prihvatljivosti
+Metoda testiranja: Black-box testiranje
+
+Aplikacija Calculator testirana je korišćenjem ispravnih i neispravnih
+aritmetičkih izraza. Cilj testiranja bio je provera ispravnosti računskih
+operacija i pronalaženje grešaka, nedostataka i propusta u aplikaciji.
+
+UOČENI DEFEKTI
+
+1. Negativan broj kao operand nakon operatora
+
+Opis:
+Kalkulator ne prihvata negativan broj kao operand kada se on nalazi
+nakon aritmetičkog operatora.
+
+Testovi:
+5*-3   Očekivano: -15.0   Dobijeno: ERROR
+5+-3   Očekivano: 2.0     Dobijeno: ERROR
+5--3   Očekivano: 8.0     Dobijeno: ERROR
+
+Status: FAIL
+
+2. Nepotpun izraz sa operatorom na kraju
+
+Opis:
+Kalkulator prihvata nepotpun aritmetički izraz u kome se operator
+nalazi na kraju izraza, bez drugog operanda.
+
+Testovi:
+5+    Očekivano: ERROR    Dobijeno: 5.0
+5-    Očekivano: ERROR    Dobijeno: 5.0
+5*    Očekivano: ERROR    Dobijeno: 5.0
+5/    Očekivano: ERROR    Dobijeno: 5.0
+
+Status: FAIL
+
+3. Prazan unos dovodi do prekida rada aplikacije
+
+Opis:
+Kada korisnik ne unese nijedan znak i samo pritisne Enter,
+aplikacija se prekida umesto da prikaže poruku o grešci.
+
+Test:
+Prazan unos
+Očekivano: ERROR ili odgovarajuća poruka o neispravnom unosu
+Dobijeno: StringIndexOutOfBoundsException i prekid rada aplikacije
+
+Status: FAIL
+
+4. Deljenje nulom nije adekvatno obrađeno
+
+Opis:
+Kalkulator ne prijavljuje grešku prilikom deljenja nulom,
+već prikazuje posebne numeričke vrednosti Infinity ili NaN.
+
+Testovi:
+5/0    Očekivano: ERROR    Dobijeno: Infinity
+0/0    Očekivano: ERROR    Dobijeno: NaN
+
+Status: FAIL
+
+5. Nepreciznost kod velikih brojeva
+
+Opis:
+Kalkulator nije precizan prilikom računanja sa velikim brojevima
+i različite rezultate prikazuje kao istu vrednost.
+
+Testovi:
+999999999+1    Očekivano: 1000000000    Dobijeno: 1.0E9
+999999999+2    Očekivano: 1000000001    Dobijeno: 1.0E9
+1000000000+1   Očekivano: 1000000001    Dobijeno: 1.0E9
+
+Status: FAIL
+
+
+USPEŠNI TESTOVI
+
+1. Osnovne aritmetičke operacije
+
+4+5      Očekivano: 9.0     Dobijeno: 9.0
+1-3      Očekivano: -2.0    Dobijeno: -2.0
+5*3      Očekivano: 15.0    Dobijeno: 15.0
+10/2     Očekivano: 5.0     Dobijeno: 5.0
+
+Status: PASS
+
+2. Prioritet i redosled računskih operacija
+
+10+5*4+3       Očekivano: 33.0    Dobijeno: 33.0
+20/5*2         Očekivano: 8.0     Dobijeno: 8.0
+10-5+2         Očekivano: 7.0     Dobijeno: 7.0
+10+20/5*2-3    Očekivano: 15.0    Dobijeno: 15.0
+
+Status: PASS
+
+3. Rad sa decimalnim brojevima
+
+2.5+1.5        Očekivano: 4.0     Dobijeno: 4.0
+.5+.5          Očekivano: 1.0     Dobijeno: 1.0
+5.+2.          Očekivano: 7.0     Dobijeno: 7.0
+5..2+1         Očekivano: ERROR   Dobijeno: ERROR
+
+Status: PASS
+
+ZAKLJUČAK
+
+Osnovne aritmetičke operacije i prioritet računskih operacija rade ispravno.
+Tokom testiranja uočeni su problemi u validaciji pojedinih ulaza,
+obradi deljenja nulom i preciznosti pri radu sa velikim brojevima.
+
+
+JEDINIČNI TEST
+
+Za proveru metode Calculate napravljen je jedinični test korišćenjem
+JUnit alata.
+
+Testirani su brojevi 5.0 i 3.0 sa operacijom sabiranja.
+Očekivani rezultat: 8.0
+Dobijeni rezultat: 8.0
+
+Status: PASS
+
+Za potrebe direktnog testiranja metode Calculate, njen pristup u
+Calculator.java promenjen je sa private na public.
+
+JUnit je korišćen za automatsko poređenje očekivanog i dobijenog
+rezultata pomoću metode assertEquals().
